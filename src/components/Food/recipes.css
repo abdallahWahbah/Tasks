@@ -1,0 +1,46 @@
+.recipes
+{
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+.recipes div
+{
+    width: 250px !important;
+    margin-top: 0 !important;
+}
+
+.recipe__item
+{
+    cursor: pointer;
+}
+
+.recipe__item img
+{
+    height: 18rem !important;
+}
+
+.shrink__text
+{
+    max-width: 200px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow: hidden;
+}
+
+.recipe__detail
+{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.recipe__detail--image
+{
+    width: 60%;
+    height: 30rem;
+}
+.recipe__detail--text
+{
+    width: 30%;
+}
