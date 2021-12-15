@@ -1,44 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 
-class Search extends React.Component
+const Search = (props) =>
 {
-    // state={term: ''};
-    
-    constructor(props)
+    const [term, setTerm] = useState('');
+
+    const onInputChange = (event) =>
     {
-        super(props);
-        this.state={term: ''};
+        setTerm(event.target.value);
     }
 
-    onInputChange = (event) =>
-    {
-        this.setState({term: event.target.value});
-    }
-
-    onFormSubmit = (event) =>
+    const onFormSubmit = (event) =>
     {
         event.preventDefault();
-        this.props.onFormSubmit(this.state.term)
+        props.onFormSubmit(term)
     }
 
+    return(
+        <div className="search-bar ui segment" style={{marginTop: "30px", marginBottom: "30px"}}>
+            <form className="ui form" onSubmit={onFormSubmit}>
+                <div className="field">
+                    <label>Food Search: </label>
+                    <input 
+                        type="text"
+                        value={term}
+                        onChange={onInputChange}
+                    />
+                </div>
+            </form>
+        </div>
+    )
 
-    render()
-    {
-        return(
-            <div className="search-bar ui segment" style={{marginTop: "30px", marginBottom: "30px"}}>
-                <form className="ui form" onSubmit={this.onFormSubmit}>
-                    <div className="field">
-                        <label>Food Search: </label>
-                        <input 
-                            type="text"
-                            value={this.state.term}
-                            onChange={this.onInputChange}
-                        />
-                    </div>
-                </form>
-            </div>
-        )
-    }
 }
 
 export default Search;

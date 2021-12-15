@@ -1,34 +1,31 @@
-import React from "react";
+import React, {useState} from "react";
 import Search from "./search/Search";
 import axios from "axios";
 import RecipeList from "./Food/RecipeList";
 import RecipeDetail from "./Food/RecipeDetail";
 
-class App extends React.Component
+const App = () =>
 {
-    state={recipes: [], selectedRecipe: null};
+    const [recipes, setRecipes] = useState([]);
+    const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-    onFormSubmit = async (term) =>
+    const onFormSubmit = async (term) =>
     {
         const response = await axios.get(`https://forkify-api.herokuapp.com/api/search?q=${term}`);
-        this.setState({recipes: response.data.recipes});
-        console.log('hello')
+        setRecipes(response.data.recipes)
     }
-    onSelection = (recipe) =>
+    const onSelection = (recipe) =>
     {
-        this.setState({selectedRecipe: recipe});
+        setSelectedRecipe(recipe)
     }
 
-    render()
-    {
-        return(
-            <div className="ui container">
-                <Search onFormSubmit={this.onFormSubmit}/>
-                <RecipeDetail recipe={this.state.selectedRecipe}/>
-                <RecipeList onSelection={this.onSelection} recipes={this.state.recipes} />
-            </div>
-        );
-    }
+    return(
+        <div className="ui container">
+            <Search onFormSubmit={onFormSubmit}/>
+            <RecipeDetail recipe={selectedRecipe}/>
+            <RecipeList onSelection={onSelection} recipes={recipes} />
+        </div>
+    );
 }   
 
 export default App;
