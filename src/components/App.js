@@ -26,6 +26,7 @@ const App = () =>
             <RecipeList onSelection={onSelection} recipes={recipes} />
         </div>
     );
+    
 }   
 
 export default App;
