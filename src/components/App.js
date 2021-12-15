@@ -12,6 +12,7 @@ class App extends React.Component
     {
         const response = await axios.get(`https://forkify-api.herokuapp.com/api/search?q=${term}`);
         this.setState({recipes: response.data.recipes});
+        console.log('hello')
     }
     onSelection = (recipe) =>
     {
