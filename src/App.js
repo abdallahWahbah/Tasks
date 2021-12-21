@@ -12,25 +12,19 @@ const App = ()=>
     const [showSignupAdmin, setShowSignupAdmin] = useState(false);
     const [showSignupCustomer, setShowSignupCustomer] = useState(false);
     
-
-    const showLoginContent =(boolValue)=>
-    {
-        console.log('App', boolValue);
-        setShowLogin(boolValue);
-    }
-
     return(
         <div>
             <Container maxWidth="lg">
-                <Navigation showLoginContent={showLoginContent} 
+                <Navigation showLoginContent={(boolValue) => setShowLogin(boolValue)} 
                             showSignupCustomer={val => setShowSignupCustomer(val)}
                             showSignupAdmin={val => setShowSignupAdmin(val)}/>
-                {showLogin && <LoginPage 
+                {/* {showLogin && <LoginPage 
                                     showLoginContent = {(boolValue) => setShowLogin(boolValue)} 
                                     showSignupAdmin={val => setShowSignupAdmin(val)}
                                     showSignupCustomer={val => setShowSignupCustomer(val)}/>}
                 {showSignupAdmin && <SignupAdmin/>}
-                {showSignupCustomer && <SignupCustomer/>}
+                {showSignupCustomer && <SignupCustomer/>} */}
+                <SignupCustomer/>
             </Container>
         </div>
     )
