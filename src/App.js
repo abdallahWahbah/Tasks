@@ -18,13 +18,12 @@ const App = ()=>
                 <Navigation showLoginContent={(boolValue) => setShowLogin(boolValue)} 
                             showSignupCustomer={val => setShowSignupCustomer(val)}
                             showSignupAdmin={val => setShowSignupAdmin(val)}/>
-                {/* {showLogin && <LoginPage 
+                {showLogin && <LoginPage 
                                     showLoginContent = {(boolValue) => setShowLogin(boolValue)} 
                                     showSignupAdmin={val => setShowSignupAdmin(val)}
                                     showSignupCustomer={val => setShowSignupCustomer(val)}/>}
                 {showSignupAdmin && <SignupAdmin/>}
-                {showSignupCustomer && <SignupCustomer/>} */}
-                <SignupCustomer/>
+                {showSignupCustomer && <SignupCustomer/>}
             </Container>
         </div>
     )

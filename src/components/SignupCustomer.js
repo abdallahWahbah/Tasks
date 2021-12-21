@@ -12,7 +12,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormLabel from '@mui/material/FormLabel';
-
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -28,7 +29,8 @@ const SignupCustomer = () =>
     phone: "",
     edu: "",
     'radio-buttons-group':"",
-    address:""
+    address:"",
+    conditions: ""
   }
   const onSubmit =  values =>
   {
@@ -40,9 +42,10 @@ const SignupCustomer = () =>
     email:yup.string().email("email must be valid").required("Email can't be empty"),
     password: yup.string().trim().min(5).max(10).required("Password can't be empty"),
     phone: yup.number().positive().required("Phone Number can't be empty"),
-    // edu: yup.string().required("Choose your education"), // can't make validation for select component
+    edu: yup.string().required("Choose your education"),
     // 'radio-buttons-group': yup.string().required() // can't make validation for radio button component
     address:yup.string().min(7).required("Address can't be empty"),
+    conditions: yup.boolean().required("You have to accept the terms and conditions first")
   })
 
   const formik = useFormik({
@@ -109,7 +112,7 @@ const SignupCustomer = () =>
               <MenuItem value={"Master"}>Master</MenuItem>
               <MenuItem value={"PHD"}>PHD</MenuItem>
             </Select>
-            {formik.touched.password && formik.errors.password? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.password}</div> : null}
+            {formik.touched.edu && formik.errors.edu? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.edu}</div> : null}
 
             <FormLabel component="legend">Gender</FormLabel>
             <RadioGroup
@@ -130,15 +133,19 @@ const SignupCustomer = () =>
               {...formik.getFieldProps("address")}/>
           {formik.touched.address && formik.errors.address? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.address}</div> : null}
 
+          <FormGroup sx={{marginBottom:"20px"}}>
+            <FormControlLabel control={<Checkbox {...formik.getFieldProps("conditions")} />} label="Agree to terms and conditions" />
+            {formik.touched.conditions && formik.errors.conditions? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.conditions}</div> : null}
+          </FormGroup>
+
           <div style={{textAlign: "center"}}>
             <Button variant="contained" 
                     type="submit" 
-                    sx={{width: "90%", textAlign: "center !important"}}
+                    sx={{width: "70%", textAlign: "center !important"}}
                     >
-                    Submit
+                    Register
             </Button>
           </div>
-
         </form>
     </Box>
   );
