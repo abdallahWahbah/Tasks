@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -11,7 +12,7 @@ import FormGroup from '@mui/material/FormGroup';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-const SignupAdmin = () => 
+const SignupAdmin = (props) => 
 {
   const initialValues=
   {
@@ -24,12 +25,31 @@ const SignupAdmin = () =>
   const onSubmit =  values =>
   {
     console.log(values);
+    const postCustomer = async ()=>
+    {
+      const response = await axios.post("http://localhost:3000/api/userLogins",
+      {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+        conditions: values.conditions,
+        role: 'admin'
+      });
+      console.log(response);
+      if(response.status === 200)
+      {
+        props.signed(true);
+        props.userType(response.data.role);
+      } 
+    }
+    postCustomer();
   }
   const validationSchema = yup.object(
   {
     name:yup.string().min(7).required("Name can't be empty"),
     email:yup.string().email("email must be valid").required("Email can't be empty"),
-    password: yup.string().trim().min(5).max(10).required("Password can't be empty"),
+    password: yup.string().trim().min(5).max(60).required("Password can't be empty"),
     phone: yup.number().positive().required("Phone Number can't be empty"),
     conditions: yup.boolean().required("You have to accept the terms and conditions first")
   })

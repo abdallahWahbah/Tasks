@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -18,7 +19,7 @@ import FormGroup from '@mui/material/FormGroup';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-const SignupCustomer = () => 
+const SignupCustomer = (props) => 
 {  
 
   const initialValues=
@@ -28,19 +29,41 @@ const SignupCustomer = () =>
     password:"",
     phone: "",
     edu: "",
-    'radio-buttons-group':"",
+    'radio-buttons-group':"", // for gender
     address:"",
     conditions: ""
   }
   const onSubmit =  values =>
   {
     console.log(values);
+    const postCustomer = async ()=>
+    {
+      const response = await axios.post("http://localhost:3000/api/userLogins",
+      {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+        edu: values.edu,
+        gender: values['radio-buttons-group'],
+        address: values.address,
+        conditions: values.conditions,
+        role: 'customer'
+      });
+      console.log(response);
+      if(response.status === 200)
+      {
+        props.signed(true);
+        props.userType(response.data.role);
+      }
+    }
+    postCustomer();
   }
   const validationSchema = yup.object(
   {
     name:yup.string().min(7).required("Name can't be empty"),
     email:yup.string().email("email must be valid").required("Email can't be empty"),
-    password: yup.string().trim().min(5).max(10).required("Password can't be empty"),
+    password: yup.string().trim().min(5).max(60).required("Password can't be empty"),
     phone: yup.number().positive().required("Phone Number can't be empty"),
     edu: yup.string().required("Choose your education"),
     // 'radio-buttons-group': yup.string().required() // can't make validation for radio button component
