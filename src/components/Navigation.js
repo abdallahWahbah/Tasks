@@ -25,7 +25,11 @@ const Navigation = (props) => {
               signed={props.signed}
               showLoginContent={val => props.showLoginContent(val)} 
               showSignupAdmin={val => props.showSignupAdmin(val)}
-              showSignupCustomer={val => props.showSignupCustomer(val)}/>
+              showSignupCustomer={val => props.showSignupCustomer(val)}
+              userType={props.userType}
+              setUserType={value => props.setUserType(value)}
+              setSigned={value => props.setSigned(value)}
+              />
 </Box>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { makeStyles } from '@mui/styles';
+import Link from '../routing/Link';
 
 
 const Header = (props) => 
@@ -36,10 +37,30 @@ const Header = (props) =>
 
   const signedList = (
     <ul className={`${props.className} ${useStyles().list}`}>
-      <li><a className={`${useStyles().linkDecoration}`} href='/'>View All Complaints</a></li>
-      <li><a className={`${useStyles().linkDecoration}`} href='/'>Create Complaint</a></li>
-      <li><a className={`${useStyles().linkDecoration}`} href='/'>Sign Out</a></li>
-    </ul>);
+      <li>
+        <Link className={`${useStyles().linkDecoration}`} href='/AllComplaints' userType={props.userType}>
+          View All Complaints
+        </Link>
+      </li>
+
+      <li>
+        <Link className={`${useStyles().linkDecoration}`} href='/CreateComplaint' userType={props.userType}>
+          Create Complaint
+        </Link>
+      </li>
+
+      <li>
+        <Link className={`${useStyles().linkDecoration}`} href='/' 
+              showLoginContent={value => props.showLoginContent(value)}
+              setUserType={value => props.setUserType(value)}
+              setSigned={value => props.setSigned(value)}
+              >
+          Sign Out
+        </Link>
+      </li>
+
+    </ul>
+  );
 
   const notSigned = <a className={`${props.className} ${useStyles().linkDecoration}`}href='/' onClick={signIn}>Sign In</a>
   
