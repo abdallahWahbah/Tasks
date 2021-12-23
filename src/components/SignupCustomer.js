@@ -146,6 +146,7 @@ const SignupCustomer = (props) =>
               <FormControlLabel value="female" control={<Radio />} label="Female" />
               <FormControlLabel value="male" control={<Radio />} label="Male" />
             </RadioGroup>
+            {formik.touched['radio-buttons-group'] && formik.errors['radio-buttons-group']? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors['radio-buttons-group']}</div> : null}
           </FormControl>
 
           <TextField 
