@@ -49,6 +49,7 @@ const LoginPage = (props) => {
                 {
                     if(user.password === values.password)
                     {
+                        props.userID(user.id)
                         props.userType(user.role);
                         props.signed(true);
                         return;

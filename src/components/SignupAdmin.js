@@ -36,9 +36,10 @@ const SignupAdmin = (props) =>
         conditions: values.conditions,
         role: 'admin'
       });
-      console.log(response);
+      console.log(response.data.id);
       if(response.status === 200)
       {
+        props.userID(response.data.id);
         props.signed(true);
         props.userType(response.data.role);
       } 

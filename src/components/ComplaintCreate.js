@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -22,6 +22,19 @@ import axios from 'axios';
 const ComplaintCreate = (props) =>
 {
     const [submitted, setSubmitted] = useState(false);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+
+    useEffect(()=>
+    {
+        const getUserData = async ()=>
+        {
+            const response = await axios.get(`http://localhost:3000/api/userLogins/${props.userID}`);
+            setName(response.data.name);
+            setEmail(response.data.email);
+        }
+        getUserData();
+    }, [])
 
     const initialValues=
     {
@@ -162,6 +175,8 @@ const ComplaintCreate = (props) =>
 
     return(
         <Box sx={{ width: '70%', margin: "20px auto"}}>
+            <h2 style={{marginBottom:"20px"}}>Hello {name} ({email})</h2>
+            
             {!submitted && complaintContent}
 
             {submitted && 
@@ -169,7 +184,7 @@ const ComplaintCreate = (props) =>
                 <p style={{display:"inline-block"}}> Submitted </p> 
                 <a href="/"style={{textAlign: "center"}} onClick={e=>e.preventDefault()}>
                     <Button variant="contained" 
-                            sx={{width: "20%", textAlign: "center !important", display:"inline-block"}}
+                            sx={{width: "50%", textAlign: "center !important", display:"inline-block"}}
                             onClick = {() => setSubmitted(false)}
                             // disabled={isNotCustomer}
                             >

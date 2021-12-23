@@ -53,6 +53,7 @@ const SignupCustomer = (props) =>
       console.log(response);
       if(response.status === 200)
       {
+        props.userID(response.data.id);
         props.signed(true);
         props.userType(response.data.role);
       }
