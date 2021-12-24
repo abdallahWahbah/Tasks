@@ -10,12 +10,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import ComplaintDetails from './ComplaintDetails';
 
 const ComplaintAll = (props) =>
 {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [complaints, setComplaints] = useState([]);
+    const [selectedComplaint, setSelectedComplaint] = useState(null);
 
     useEffect(()=>
     {
@@ -34,42 +36,52 @@ const ComplaintAll = (props) =>
         getAllComplains();
     }, [props.userID]);
 
-    return(
-        <Box sx={{ width: '70%', margin: "20px auto"}}>
+    const allComplaintsContent = (
+        <React.Fragment>
             <h2 style={{marginBottom:"20px"}}>Hello {name} ({email})</h2>
             <div style={{backgroundImage:"linear-gradient(to bottom, rgba(255, 255, 255, .1), rgba(0, 0, 0, .1))"}}>
-            
-            <TableContainer sx={{backgroundColor: "transparent !important"}} component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Subject</TableCell>
-                            <TableCell align="right">Complaint Type</TableCell>
-                            <TableCell align="right">Complaint ID</TableCell>
-                            <TableCell align="right">Severity</TableCell>
-                            <TableCell align="right">Language</TableCell>
-                        </TableRow>
-                    </TableHead>
+                <TableContainer sx={{backgroundColor: "transparent !important"}} component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Subject</TableCell>
+                                <TableCell align="right">Complaint Type</TableCell>
+                                <TableCell align="right">Complaint ID</TableCell>
+                                <TableCell align="right">Severity</TableCell>
+                                <TableCell align="right">Language</TableCell>
+                            </TableRow>
+                        </TableHead>
 
-                    <TableBody>
-                    {complaints.map((complaint) => (
-                        <TableRow
-                            key={complaint.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                        <TableCell component="th" scope="row">
-                            {complaint.subject}
-                        </TableCell>
-                        <TableCell align="right">{complaint.type}</TableCell>
-                        <TableCell align="right">{complaint.id}</TableCell>
-                        <TableCell align="right">{complaint.severity}</TableCell>
-                        <TableCell align="right">{complaint.language}</TableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
+                        <TableBody>
+                        {complaints.map((complaint) => (
+                            <TableRow
+                                key={complaint.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 }, cursor:"pointer"}}
+                                onClick={() => setSelectedComplaint(complaint)}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {complaint.subject}
+                                </TableCell>
+                                <TableCell align="right">{complaint.type}</TableCell>
+                                <TableCell align="right">{complaint.id}</TableCell>
+                                <TableCell align="right">{complaint.severity}</TableCell>
+                                <TableCell align="right">{complaint.language}</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
                 </TableContainer>
             </div>
+        </React.Fragment>
+    );
+
+    return(
+        <Box sx={{ width: '70%', margin: "20px auto"}}>
+            {!selectedComplaint && allComplaintsContent}
+            {selectedComplaint && <ComplaintDetails 
+                                            selectedComplaint={selectedComplaint}
+                                            email={email}
+                                            userType={props.userType}/>}
         </Box>
     )
 }

@@ -3,8 +3,8 @@ import Navigation from "./components/Navigation";
 import LoginPage from "./components/Login";
 import SignupAdmin from './components/SignupAdmin';
 import SignupCustomer from './components/SignupCustomer';
-import ComplaintCreate from './components/ComplaintCreate';
 import ComplaintAll from './components/ComplaintAll';
+import ComplaintCreate from './components/ComplaintCreate';
 import Route from './routing/Route';
 
 import Container from '@mui/material/Container';
@@ -65,7 +65,10 @@ const App = ()=>
 
                 <Route path="/AllComplaints">
                     {userType === "admin" ? console.log("admin page"): console.log("not admin")}
-                    {userType === "admin" ? <ComplaintAll userType={userType} userID = {userID}/> : null}
+                    {userType === "admin" ? <ComplaintAll 
+                                                    userType={userType} 
+                                                    userID = {userID}
+                                                    /> : null}
                 </Route>
 
             </Container>

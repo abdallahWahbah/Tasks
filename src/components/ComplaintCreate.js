@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -17,7 +18,6 @@ import FormGroup from '@mui/material/FormGroup';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
 
 const ComplaintCreate = (props) =>
 {
@@ -34,7 +34,7 @@ const ComplaintCreate = (props) =>
             setEmail(response.data.email);
         }
         getUserData();
-    }, [])
+    }, [props.userID])
 
     const initialValues=
     {
@@ -84,7 +84,6 @@ const ComplaintCreate = (props) =>
     })
 
     // const isNotCustomer = props.userType === "customer" ? false : true;
-    // console.log("create", isNotCustomer, props.userType);
 
     const complaintContent = (
         <React.Fragment>
