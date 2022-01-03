@@ -41,16 +41,25 @@ const ComplaintDetails = ({selectedComplaint, email}) =>
         updateComplaint();
     }
 
-    const validationSchema = yup.object(
-    {
-        type: yup.string().required("Type is required"),
-        description:  yup.string().required("Description is required")
+    let initialValues = {};
+    let validators = {};
+    UpdateComplaintJson.map(element =>
+    {   
+        if(element.hasOwnProperty("initialValue")) 
+        {
+            initialValues[element.name] = element["initialValue"];
+        }
+        if(element.hasOwnProperty("validator")) 
+        {
+            validators[element.name] = element["validator"];
+        }
+        console.log(initialValues, validators)
     });
 
     const formik = useFormik({
-        initialValues: UpdateComplaintJson[UpdateComplaintJson.length - 1],
+        initialValues,
         onSubmit,
-        validationSchema
+        validationSchema: yup.object(validators)
     });
 
     // const isNotCustomer = props.userType === "admin" ? false : true;

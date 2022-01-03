@@ -61,16 +61,27 @@ const LoginPage = (props) => {
         }
         login();
     }
-    const validationSchema = yup.object(
-    {
-        email: yup.string().email("email must be valid").required("Email can't be empty"),
-        password: yup.string().trim().min(5).max(60).required("Password can't be empty")
-    })
+
+    let initialValues = {};
+    let validators = {};
+
+    LoginJson.map(element =>
+    {   
+        if(element.hasOwnProperty("initialValue")) 
+        {
+            initialValues[element.name] = element["initialValue"];
+        }
+        if(element.hasOwnProperty("validator")) 
+        {
+            validators[element.name] = element["validator"];
+        }
+        console.log(initialValues, validators)
+    });
 
     const formik = useFormik({
-        initialValues: LoginJson[LoginJson.length - 1],
+        initialValues: initialValues,
         onSubmit,
-        validationSchema
+        validationSchema: yup.object(validators)
     });
 
     const formContent = LoginJson.map(element =>

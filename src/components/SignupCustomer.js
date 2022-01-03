@@ -48,22 +48,26 @@ const SignupCustomer = (props) =>
     }
     postCustomer();
   }
-  const validationSchema = yup.object(
-  {
-    name:yup.string().min(7).required("Name can't be empty"),
-    email:yup.string().email("email must be valid").required("Email can't be empty"),
-    password: yup.string().trim().min(5).max(60).required("Password can't be empty"),
-    phone: yup.number().positive().required("Phone Number can't be empty"),
-    edu: yup.string().required("Choose your education"),
-    // 'radio-buttons-group': yup.string().required() // can't make validation for radio button component
-    address:yup.string().min(7).required("Address can't be empty"),
-    conditions: yup.boolean().required("You have to accept the terms and conditions first")
-  })
+
+  let initialValues = {};
+  let validators = {};
+  CustomerJson.map(element =>
+  {   
+      if(element.hasOwnProperty("initialValue")) 
+      {
+          initialValues[element.name] = element["initialValue"];
+      }
+      if(element.hasOwnProperty("validator")) 
+      {
+          validators[element.name] = element["validator"];
+      }
+      console.log(initialValues, validators)
+  });
 
   const formik = useFormik({
-    initialValues: CustomerJson[CustomerJson.length - 1],
+    initialValues: initialValues,
     onSubmit,
-    validationSchema
+    validationSchema: yup.object(validators)
   });
 
   const formContent = CustomerJson.map(element =>

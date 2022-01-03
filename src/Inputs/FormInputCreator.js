@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 export const LoginJson = 
 [
     {
@@ -7,6 +9,8 @@ export const LoginJson =
         id: "fullWidth",
         sx: {marginBottom: "20px"},
         name: "email",
+        initialValue: "",
+        validator: yup.string().email("email must be valid").required("Email can't be empty")
     },
     {
         type: "password",
@@ -14,17 +18,15 @@ export const LoginJson =
         label: "Password",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "password"
+        name: "password",
+        initialValue: "",
+        validator: yup.string().trim().min(5).max(60).required("Password can't be empty")
     },
     {
         type: "button",
         fullWidth: "fullWidth",
         sx: {margin: "10px 0"},
         title: "Login"
-    },
-    { // Initial values(last element)
-        email: "",
-        passworD: "",
     }
 ]
 
@@ -36,7 +38,9 @@ export const CustomerJson =
         label: "Full Name",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "name"
+        name: "name",
+        initialValue: "",
+        validator: yup.string().min(7).required("Name can't be empty")
     },
     {
         type: "text", // email
@@ -44,7 +48,9 @@ export const CustomerJson =
         label: "Email",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "email"
+        name: "email",
+        initialValue: "",
+        validator: yup.string().email("email must be valid").required("Email can't be empty")
     },
     {
         type: "password",
@@ -52,7 +58,9 @@ export const CustomerJson =
         label: "Password",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "password"
+        name: "password",
+        initialValue: "",
+        validator: yup.string().trim().min(5).max(60).required("Password can't be empty")
     },
     {
         type: "number",
@@ -60,7 +68,9 @@ export const CustomerJson =
         label: "Phone Number",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "phone"
+        name: "phone",
+        initialValue: "",
+        validator: yup.number().positive().required("Phone Number can't be empty")
     },
     {
         type: "select", // education
@@ -69,6 +79,8 @@ export const CustomerJson =
         selectId: "demo-simple-select",
         label: "Education",
         name: "edu",
+        initialValue: "",
+        validator: yup.string().required("Choose your education"),
         options: 
         [
             {
@@ -109,12 +121,16 @@ export const CustomerJson =
         label: "Address",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "address"
+        name: "address",
+        initialValue: "",
+        validator: yup.string().min(7).required("Address can't be empty")
     },
     {
         type: "checkbox",
         sx: {marginBottom:"20px"},
         name: "conditions",
+        initialValue: "",
+        validator: yup.boolean().required("You have to accept the terms and conditions first"),
         label: "Agree to terms and conditions"
     },
     {
@@ -122,16 +138,6 @@ export const CustomerJson =
         fullWidth: "fullWidth",
         sx: {width: "70%", textAlign: "center !important"},
         title: "Register"
-    },
-    { // Initial values(last element)
-        name: "",
-        email:"",
-        password:"",
-        phone: "",
-        edu: "",
-        'radio-buttons-group':"", // for gender
-        address:"",
-        conditions: ""
     }
 ]
 
@@ -143,7 +149,9 @@ export const AdminJson =
         label: "Full Name",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "name"
+        name: "name",
+        initialValue: "",
+        validator: yup.string().min(7).required("Name can't be empty")
     },
     {
         type: "email",
@@ -151,7 +159,9 @@ export const AdminJson =
         label: "Email",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "email"
+        name: "email",
+        initialValue: "",
+        validator: yup.string().email("email must be valid").required("Email can't be empty")
     },
     {
         type: "password",
@@ -159,7 +169,9 @@ export const AdminJson =
         label: "Password",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "password"
+        name: "password",
+        initialValue: "",
+        validator: yup.string().trim().min(5).max(60).required("Password can't be empty")
     },
     {
         type: "number",
@@ -167,12 +179,16 @@ export const AdminJson =
         label: "Phone Number",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "phone"
+        name: "phone",
+        initialValue: "",
+        validator: yup.number().positive().required("Phone Number can't be empty")
     },
     {
         type: "checkbox",
         sx: {marginBottom:"20px"},
         name: "conditions",
+        initialValue: "",
+        validator: yup.boolean().required("You have to accept the terms and conditions first"),
         label: "Agree to terms and conditions"
     },
     {
@@ -180,13 +196,6 @@ export const AdminJson =
         fullWidth: "fullWidth",
         sx: {width: "70%", textAlign: "center !important"},
         title: "Register"
-    },
-    { // Initial values
-        name: "",
-        email:"",
-        password:"",
-        phone: "",
-        conditions: ""
     }
 ]
 
@@ -199,6 +208,8 @@ export const CreateComplaintJson =
         selectId: "demo-simple-select",
         label: "Complaint Type",
         name: "type",
+        initialValue: "",
+        validator: yup.string().required("Type is required"),
         options:
         [
             {
@@ -221,7 +232,9 @@ export const CreateComplaintJson =
         label: "Subject",
         id: "fullWidth",
         sx: {marginBottom: "20px"},
-        name: "subject"
+        name: "subject",
+        initialValue: "",
+        validator: yup.string().required("Subject is required")
     },
     {
         type: "select", // complaint severity
@@ -230,6 +243,8 @@ export const CreateComplaintJson =
         selectId: "demo-simple-select",
         label: "Severity",
         name: "severity",
+        initialValue: "",
+        validator: yup.string().required("Severity is required"),
         options: 
         [
             {
@@ -254,7 +269,9 @@ export const CreateComplaintJson =
         multiline: true,
         rows: 3,
         sx: {marginBottom: "20px"},
-        name: "description"
+        name: "description",
+        initialValue: "",
+        validator: yup.string().required("Description is required"),
     },
     {
         type: "radio", // language
@@ -277,6 +294,8 @@ export const CreateComplaintJson =
         type: "checkbox",
         sx: {marginBottom:"20px"},
         name: "conditions",
+        initialValue: "",
+        validator: yup.boolean().required("You have to accept the terms and conditions first"),
         label: "Agree to terms and conditions"
     },
     {
@@ -284,14 +303,6 @@ export const CreateComplaintJson =
         fullWidth: "fullWidth",
         sx: {width: "70%", textAlign: "center !important"},
         title: "Create Complaint"
-    },
-    { // initial values
-        type:"",
-        subject:"",
-        severity:"",
-        description:"",
-        'radio-buttons-group':"", // for language
-        conditions:""
     }
 ]
 
@@ -304,6 +315,8 @@ export const UpdateComplaintJson =
         selectId: "demo-simple-select",
         label: "Complaint Type",
         name: "type",
+        initialValue: "",
+        validator: yup.string().required("Type is required"),
         options: 
         [
             {
@@ -328,16 +341,14 @@ export const UpdateComplaintJson =
         multiline: true,
         rows: 3,
         sx: {marginBottom: "20px"},
-        name: "description"
+        name: "description",
+        initialValue: "",
+        validator: yup.string().required("Description is required")
     },
     {
         type: "button",
         fullWidth: "fullWidth",
         sx: {width: "70%", textAlign: "center !important"},
         title: "Update Complaint"
-    },
-    { // Initial values
-        type:"",
-        description:""
     }
 ]

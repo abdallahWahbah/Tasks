@@ -43,19 +43,26 @@ const SignupAdmin = (props) =>
     }
     postCustomer();
   }
-  const validationSchema = yup.object(
-  {
-    name:yup.string().min(7).required("Name can't be empty"),
-    email:yup.string().email("email must be valid").required("Email can't be empty"),
-    password: yup.string().trim().min(5).max(60).required("Password can't be empty"),
-    phone: yup.number().positive().required("Phone Number can't be empty"),
-    conditions: yup.boolean().required("You have to accept the terms and conditions first")
-  })
+
+  let initialValues = {};
+  let validators = {};
+  AdminJson.map(element =>
+  {   
+    if(element.hasOwnProperty("initialValue")) 
+    {
+        initialValues[element.name] = element["initialValue"];
+    }
+    if(element.hasOwnProperty("validator")) 
+    {
+        validators[element.name] = element["validator"];
+    }
+    console.log(initialValues, validators)
+  });
 
   const formik = useFormik({
-    initialValues: AdminJson[AdminJson.length - 1],
+    initialValues,
     onSubmit,
-    validationSchema
+    validationSchema: yup.object(validators)
   });
 
   const formContent = AdminJson.map(element =>

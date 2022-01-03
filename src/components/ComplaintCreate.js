@@ -57,19 +57,26 @@ const ComplaintCreate = (props) =>
         }
         postComplaint();
     }
-    const validationSchema = yup.object(
-    {
-        type: yup.string().required("Type is required"),
-        subject:  yup.string().required("Subject is required"),
-        severity: yup.string().required("Severity is required"),
-        description:  yup.string().required("Description is required"),
-        // 'radio-buttons-group': yup.string().required("Language is required"),
-        conditions:  yup.boolean().required("You have to accept the terms and conditions first"),
+
+    let initialValues = {};
+    let validators = {};
+    CreateComplaintJson.map(element =>
+    {   
+        if(element.hasOwnProperty("initialValue")) 
+        {
+            initialValues[element.name] = element["initialValue"];
+        }
+        if(element.hasOwnProperty("validator")) 
+        {
+            validators[element.name] = element["validator"];
+        }
+        console.log(initialValues, validators)
     });
+
     const formik = useFormik({
-        initialValues: CreateComplaintJson[CreateComplaintJson.length - 1],
+        initialValues,
         onSubmit,
-        validationSchema
+        validationSchema: yup.object(validators)
     })
 
     // const isNotCustomer = props.userType === "customer" ? false : true;
