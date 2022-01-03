@@ -13,7 +13,6 @@ const Link = ({className, href, children, userType, setUserType, setSigned, show
         {
             const logout = ()=>
             {
-                console.log('object')
                 // const response = await axios.
                 // window.history.replaceState({}, '', href);
                 setUserType("none");

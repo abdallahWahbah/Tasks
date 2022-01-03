@@ -2,22 +2,20 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import Radio from '@mui/material/Radio';
-import FormLabel from '@mui/material/FormLabel';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
+import { CreateComplaintJson } from '../Inputs/FormInputCreator';
+
+import TextForm from '../Inputs/TextForm';
+import SelectForm from '../Inputs/SelectForm';
+import RadioForm from '../Inputs/RadioForm';
+import CheckboxForm from '../Inputs/CheckboxForm';
+import ButtonForm from '../Inputs/ButtonForm';
 
 const ComplaintCreate = (props) =>
 {
@@ -36,15 +34,6 @@ const ComplaintCreate = (props) =>
         getUserData();
     }, [props.userID])
 
-    const initialValues=
-    {
-        type:"",
-        subject:"",
-        severity:"",
-        description:"",
-        'radio-buttons-group':"", // for language
-        conditions:""
-    }
     const onSubmit = (values)=>
     {
         console.log(values);
@@ -74,16 +63,68 @@ const ComplaintCreate = (props) =>
         subject:  yup.string().required("Subject is required"),
         severity: yup.string().required("Severity is required"),
         description:  yup.string().required("Description is required"),
-        'radio-buttons-group': yup.string().required("Language is required"),
+        // 'radio-buttons-group': yup.string().required("Language is required"),
         conditions:  yup.boolean().required("You have to accept the terms and conditions first"),
     });
     const formik = useFormik({
-        initialValues,
+        initialValues: CreateComplaintJson[CreateComplaintJson.length - 1],
         onSubmit,
         validationSchema
     })
 
     // const isNotCustomer = props.userType === "customer" ? false : true;
+
+    const selectContent1 = CreateComplaintJson.map(element =>
+    {
+        if(element.name === "type")
+        {
+            return <SelectForm formik={formik} json={element} key={element.name}/>
+        }
+        else return null;
+    })
+
+    const subjectContent = CreateComplaintJson.map(element =>
+    {
+        if(element.name === "subject")
+        {
+            return <TextForm formik={formik} json={element} key={element.name}/>
+        }
+        else return null;
+    })
+
+    const selectContent2 = CreateComplaintJson.map(element =>
+    {
+        if(element.name === "severity")
+        {
+            return <SelectForm formik={formik} json={element} key={element.name}/>
+        }
+        else return null;
+    })
+
+    const formContent = CreateComplaintJson.map (element =>
+    {
+        if(element.name === "description")
+        {
+            return <TextForm formik={formik} json={element} key={element.name}/>
+        }  
+        else if(element.type === "radio")
+        {
+            return <RadioForm formik={formik} json={element} key={element.name}/>
+        }
+        else if(element.type === "checkbox")
+        {
+            return <CheckboxForm formik={formik} json={element} key={element.name}/>
+        }
+        else if(element.type === "button")
+        {
+            return (
+                <div style={{textAlign: "center"}} key={element.title}>
+                    <ButtonForm json={element}/>
+                </div>
+            )
+        }
+        else return null;
+    })
 
     const complaintContent = (
         <React.Fragment>
@@ -97,77 +138,17 @@ const ComplaintCreate = (props) =>
             <form onSubmit={formik.handleSubmit}>
                 
                 <FormControl fullWidth sx={{marginBottom: "20px"}}>
-                    <InputLabel id="demo-simple-select-label">Complaint Type</InputLabel>
-                    <Select sx={{marginBottom: "20px"}}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Complaint Type"
-                    {...formik.getFieldProps("type")}
-                    >
-                        <MenuItem value={"type1"}>Type 1</MenuItem>
-                        <MenuItem value={"type2"}>Type 2</MenuItem>
-                        <MenuItem value={"type3"}>Type 3</MenuItem>
-                    </Select>
-                    {formik.touched.type && formik.errors.type? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.type}</div> : null}  
+                    {selectContent1}
                 </FormControl>
 
-                <TextField 
-                    fullWidth 
-                    label="Subject"
-                    id="fullWidth"
-                    sx={{marginBottom: "20px"}}
-                    {...formik.getFieldProps("subject")}/>
-                {formik.touched.subject && formik.errors.subject? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.subject}</div> : null}
-
+                {subjectContent}
+                
                 <FormControl fullWidth sx={{marginBottom: "20px"}}>
-                    <InputLabel id="demo-simple-select-label">Severity</InputLabel>
-                    <Select sx={{marginBottom: "20px"}}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Severity"
-                    {...formik.getFieldProps("severity")}
-                    >
-                        <MenuItem value={"severity1"}>Severity 1</MenuItem>
-                        <MenuItem value={"severity2"}>Severity 2</MenuItem>
-                        <MenuItem value={"severity3"}>Severity 3</MenuItem>
-                    </Select>
-                    {formik.touched.severity && formik.errors.severity? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.severity}</div> : null}
+                    {selectContent2}    
                 </FormControl>
 
-                <TextField 
-                    fullWidth 
-                    label="Description"
-                    id="fullWidth"
-                    multiline
-                    rows={3}
-                    sx={{marginBottom: "20px"}}
-                    {...formik.getFieldProps("description")}/>
-                {formik.touched.description && formik.errors.description? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.description}</div> : null}
-
-                <FormLabel component="legend">Prefered Contact Language</FormLabel>
-                <RadioGroup
-                    aria-label="Prefered Contact Language"
-                    {...formik.getFieldProps("radio-buttons-group")}
-                >
-                    <FormControlLabel value="arabic" control={<Radio />} label="Arabic" />
-                    <FormControlLabel value="english" control={<Radio />} label="English" />
-                </RadioGroup>
-                {formik.touched['radio-buttons-group'] && formik.errors['radio-buttons-group']? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors['radio-buttons-group']}</div> : null}
-
-                <FormGroup sx={{marginBottom:"20px"}}>
-                    <FormControlLabel control={<Checkbox {...formik.getFieldProps("conditions")} />} label="Agree to terms and conditions" />
-                    {formik.touched.conditions && formik.errors.conditions? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.conditions}</div> : null}
-                </FormGroup>
-
-                <div style={{textAlign: "center"}}>
-                    <Button variant="contained" 
-                            type="submit" 
-                            sx={{width: "70%", textAlign: "center !important"}}
-                            // disabled={isNotCustomer}
-                            >
-                            Register
-                    </Button>
-                </div>
+                {formContent}
+                
             </form>
         </React.Fragment>
     )

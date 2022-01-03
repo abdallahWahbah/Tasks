@@ -6,16 +6,15 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+import { UpdateComplaintJson } from '../Inputs/FormInputCreator';
+import TextForm from '../Inputs/TextForm';
+import SelectForm from '../Inputs/SelectForm';
+import ButtonForm from '../Inputs/ButtonForm';
 
 const ComplaintDetails = ({selectedComplaint, email}) =>
 {
@@ -62,6 +61,31 @@ const ComplaintDetails = ({selectedComplaint, email}) =>
 
     // const isNotCustomer = props.userType === "admin" ? false : true;
 
+    const selectContent = UpdateComplaintJson.map(element =>
+    {
+        if(element.name === "type")
+        {
+            return <SelectForm formik={formik} json={element}/>
+        }
+        else return null;
+    })  
+    
+    const formContent = UpdateComplaintJson.map(element =>
+    {
+        if(element.name === "description")
+        {
+            return <TextForm formik={formik} json={element}/>
+        }
+        else if(element.type === "button")
+        {
+            return (
+                <div style={{textAlign: "center"}}>
+                    <ButtonForm json={element}/>
+                </div>
+            )
+        }
+        else return null;
+    })  
 
     return(
         <React.Fragment>
@@ -132,39 +156,10 @@ const ComplaintDetails = ({selectedComplaint, email}) =>
 
             <form style={{marginTop:"20px"}} onSubmit={formik.handleSubmit}>
                 <FormControl fullWidth sx={{marginBottom: "20px"}}>
-                    <InputLabel id="demo-simple-select-label">Complaint Type</InputLabel>
-                    <Select sx={{marginBottom: "20px"}}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Complaint Type"
-                    {...formik.getFieldProps("type")}
-                    >
-                        <MenuItem value={"type1"}>Type 1</MenuItem>
-                        <MenuItem value={"type2"}>Type 2</MenuItem>
-                        <MenuItem value={"type3"}>Type 3</MenuItem>
-                    </Select>
-                    {formik.touched.type && formik.errors.type? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.type}</div> : null}  
+                    {selectContent}    
                 </FormControl>
 
-                <TextField 
-                    fullWidth 
-                    label="Description"
-                    id="fullWidth"
-                    multiline
-                    rows={3}
-                    sx={{marginBottom: "20px"}}
-                    {...formik.getFieldProps("description")}/>
-                {formik.touched.description && formik.errors.description? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.description}</div> : null}
-
-                <div style={{textAlign: "center"}}>
-                    <Button variant="contained" 
-                            type="submit" 
-                            sx={{width: "70%", textAlign: "center !important"}}
-                            // disabled={isNotCustomer}
-                            >
-                            Register
-                    </Button>
-                </div>
+                {formContent}
             </form>
         </React.Fragment>
     )

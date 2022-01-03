@@ -2,26 +2,19 @@ import React from 'react';
 import axios from 'axios';
 
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+import { AdminJson } from '../Inputs/FormInputCreator';
+
+import TextForm from '../Inputs/TextForm';
+import CheckboxForm from '../Inputs/CheckboxForm';
+import ButtonForm from '../Inputs/ButtonForm';
+
 const SignupAdmin = (props) => 
 {
-  const initialValues=
-  {
-    name: "",
-    email:"",
-    password:"",
-    phone: "",
-    conditions: ""
-  }
   const onSubmit =  values =>
   {
     console.log(values);
@@ -56,11 +49,43 @@ const SignupAdmin = (props) =>
   })
 
   const formik = useFormik({
-    initialValues,
+    initialValues: AdminJson[AdminJson.length - 1],
     onSubmit,
     validationSchema
   });
 
+  const formContent = AdminJson.map(element =>
+  {
+      if(element.type === "text")
+      {
+        return <TextForm formik={formik} json={element}/>
+      }
+      else if(element.type === "email")
+      {
+        return <TextForm formik={formik} json={element}/>
+      }
+      else if(element.type === "password")
+      {
+        return <TextForm formik={formik} json={element}/>
+      }
+      else if(element.type === "number")
+      {
+        return <TextForm formik={formik} json={element}/>
+      }
+      else if(element.type === "checkbox")
+      {
+        return <CheckboxForm formik={formik} json={element}/>
+      }
+      else if(element.type === "button")
+      {
+        return (
+          <div style={{textAlign: "center"}}>
+            <ButtonForm json={element}/>
+          </div>
+        )
+      }
+      else return null;
+  })
 
   return (
     <Box sx={{ width: '70%', margin: "20px auto"}}>
@@ -72,54 +97,7 @@ const SignupAdmin = (props) =>
         <hr style={{width: "60%", marginBottom: "20px"}}/>
 
         <form onSubmit={formik.handleSubmit}>
-          <TextField 
-              fullWidth 
-              label="Full Name"
-              id="fullWidth"
-              sx={{marginBottom: "20px"}}
-              {...formik.getFieldProps("name")}/>
-          {formik.touched.name && formik.errors.name? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.name}</div> : null}
-
-          <TextField 
-              fullWidth 
-              label="Email"
-              id="fullWidth"
-              sx={{marginBottom: "20px"}}
-              {...formik.getFieldProps("email")}/>
-          {formik.touched.email && formik.errors.email? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.email}</div> : null}
-
-          <TextField 
-              fullWidth 
-              label="Password"
-              type="password"
-              id="fullWidth"
-              sx={{marginBottom: "20px"}}
-              {...formik.getFieldProps("password")}/>
-          {formik.touched.password && formik.errors.password? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.password}</div> : null}
-
-          <TextField 
-              fullWidth 
-              label="Phone Number"
-              type="number"
-              id="fullWidth"
-              sx={{marginBottom: "20px"}}
-              {...formik.getFieldProps("phone")}/>
-          {formik.touched.phone && formik.errors.phone? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.phone}</div> : null}
-
-
-          <FormGroup sx={{marginBottom:"20px"}}>
-            <FormControlLabel control={<Checkbox {...formik.getFieldProps("conditions")} />} label="Agree to terms and conditions" />
-            {formik.touched.conditions && formik.errors.conditions? <div style={{color:"red", marginBottom: "20px"}}>{formik.errors.conditions}</div> : null}
-          </FormGroup>
-
-          <div style={{textAlign: "center"}}>
-            <Button variant="contained" 
-                    type="submit" 
-                    sx={{width: "70%", textAlign: "center !important"}}
-                    >
-                    Register
-            </Button>
-          </div>
+          {formContent}
         </form>
     </Box>
   );
