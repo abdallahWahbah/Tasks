@@ -40,6 +40,10 @@ const SignupCustomer = (props) =>
         props.userID(response.data.id);
         props.signed(true);
         props.userType(response.data.role);
+
+        localStorage.setItem("id", response.data.id);
+        localStorage.setItem("role", response.data.role);
+        localStorage.setItem("signed", true);
       }
     }
     postCustomer();
@@ -66,19 +70,19 @@ const SignupCustomer = (props) =>
   {
       if(element.type === "text" && element.label === "Full Name")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "text" && element.label === "Email")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "password")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "number")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else return null;
   })
@@ -87,11 +91,11 @@ const SignupCustomer = (props) =>
   {
       if(element.type === "select")
       {
-        return <SelectForm formik={formik} json={element}/>
+        return <SelectForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "radio")
       {
-        return <RadioForm formik={formik} json={element}/>
+        return <RadioForm formik={formik} json={element} key={element.name}/>
       }
       else return null;
   })
@@ -101,17 +105,17 @@ const SignupCustomer = (props) =>
   {
       if(element.type === "text" && element.label === "Address")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "checkbox")
       {
-        return <CheckboxForm formik={formik} json={element}/>
+        return <CheckboxForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "button")
       {
           return (
-            <div style={{textAlign: "center"}}>
-                <ButtonForm formik={formik} json={element}/>
+            <div style={{textAlign: "center"}} key={element.type}>
+                <ButtonForm formik={formik} json={element} key={element.type}/>
             </div>
         )
       }

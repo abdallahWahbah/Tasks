@@ -49,6 +49,11 @@ const LoginPage = (props) => {
                         props.userID(user.id)
                         props.userType(user.role);
                         props.signed(true);
+
+                        localStorage.setItem("id", user.id);
+                        localStorage.setItem("role", user.role);
+                        localStorage.setItem("signed", true);
+
                         return;
                     }
                 }
@@ -72,15 +77,15 @@ const LoginPage = (props) => {
     {
         if(element.type === "email")
         {
-            return <TextForm formik={formik} json={element}/>
+            return <TextForm formik={formik} json={element} key={element.name}/>
         }
         else if(element.type === "password")
         {
-            return <TextForm formik={formik} json={element}/>
+            return <TextForm formik={formik} json={element} key={element.name}/>
         }
         else if(element.type === "button")
         {
-            return <ButtonForm json={element}/>
+            return <ButtonForm json={element} key={element.type}/>
         }
         else return null;
     })

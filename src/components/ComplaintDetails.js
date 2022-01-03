@@ -27,12 +27,6 @@ const ComplaintDetails = ({selectedComplaint, email}) =>
         color: theme.palette.text.secondary,
     }));
 
-    const initialValues=
-    {
-        type:"",
-        description:""
-    }
-
     const onSubmit = (values)=>
     {
         const updateComplaint = async ()=>
@@ -54,7 +48,7 @@ const ComplaintDetails = ({selectedComplaint, email}) =>
     });
 
     const formik = useFormik({
-        initialValues,
+        initialValues: UpdateComplaintJson[UpdateComplaintJson.length - 1],
         onSubmit,
         validationSchema
     });
@@ -65,7 +59,7 @@ const ComplaintDetails = ({selectedComplaint, email}) =>
     {
         if(element.name === "type")
         {
-            return <SelectForm formik={formik} json={element}/>
+            return <SelectForm formik={formik} json={element} key={element.name}/>
         }
         else return null;
     })  
@@ -74,12 +68,12 @@ const ComplaintDetails = ({selectedComplaint, email}) =>
     {
         if(element.name === "description")
         {
-            return <TextForm formik={formik} json={element}/>
+            return <TextForm formik={formik} json={element} key={element.name}/>
         }
         else if(element.type === "button")
         {
             return (
-                <div style={{textAlign: "center"}}>
+                <div style={{textAlign: "center"}} key={element.type}>
                     <ButtonForm json={element}/>
                 </div>
             )

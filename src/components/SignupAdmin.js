@@ -35,6 +35,10 @@ const SignupAdmin = (props) =>
         props.userID(response.data.id);
         props.signed(true);
         props.userType(response.data.role);
+
+        localStorage.setItem("id", response.data.id);
+        localStorage.setItem("role", response.data.role);
+        localStorage.setItem("signed", true);
       } 
     }
     postCustomer();
@@ -58,28 +62,28 @@ const SignupAdmin = (props) =>
   {
       if(element.type === "text")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "email")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "password")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "number")
       {
-        return <TextForm formik={formik} json={element}/>
+        return <TextForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "checkbox")
       {
-        return <CheckboxForm formik={formik} json={element}/>
+        return <CheckboxForm formik={formik} json={element} key={element.name}/>
       }
       else if(element.type === "button")
       {
         return (
-          <div style={{textAlign: "center"}}>
+          <div style={{textAlign: "center"}} key={element.type}>
             <ButtonForm json={element}/>
           </div>
         )

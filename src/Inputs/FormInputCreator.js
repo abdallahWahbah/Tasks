@@ -335,5 +335,9 @@ export const UpdateComplaintJson =
         fullWidth: "fullWidth",
         sx: {width: "70%", textAlign: "center !important"},
         title: "Update Complaint"
+    },
+    { // Initial values
+        type:"",
+        description:""
     }
 ]

@@ -14,12 +14,12 @@ const App = ()=>
     const [showLogin, setShowLogin] = useState(true);
     const [showSignupAdmin, setShowSignupAdmin] = useState(false);
     const [showSignupCustomer, setShowSignupCustomer] = useState(false);
-    const [signed, setSigned] = useState(false);
-    const [userType, setUserType] = useState("");
-    const [userID, setUserID] = useState('');
-    console.log("type", userType);
-    console.log("showLogin", showLogin);
-    console.log('signed', signed);
+    const [signed, setSigned] = useState(JSON.parse(localStorage.getItem("signed")));
+    const [userType, setUserType] = useState(localStorage.getItem("role"));
+    const [userID, setUserID] = useState(localStorage.getItem("id"));
+    // console.log("type", userType);
+    // console.log("showLogin", showLogin);
+    console.log('signed', signed, typeof signed);
     
     return(
         <div>
@@ -59,12 +59,12 @@ const App = ()=>
                 {userType === "admin" ? <p>You are an admin, you can see all complains and update them</p> : null}
 
                 <Route path='/CreateComplaint'>
-                    {userType === "customer" ? console.log("customer page"): console.log("not customer")}
+                    {/* {userType === "customer" ? console.log("customer page"): console.log("not customer")} */}
                     {userType === "customer" ? <ComplaintCreate  userType={userType} userID = {userID}/> : null}
                 </Route>
 
                 <Route path="/AllComplaints">
-                    {userType === "admin" ? console.log("admin page"): console.log("not admin")}
+                    {/* {userType === "admin" ? console.log("admin page"): console.log("not admin")} */}
                     {userType === "admin" ? <ComplaintAll 
                                                     userType={userType} 
                                                     userID = {userID}

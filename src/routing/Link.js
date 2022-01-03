@@ -15,8 +15,14 @@ const Link = ({className, href, children, userType, setUserType, setSigned, show
             {
                 // const response = await axios.
                 // window.history.replaceState({}, '', href);
+
                 setUserType("none");
                 setSigned(false);
+
+                localStorage.setItem("signed", false);
+                localStorage.setItem("id", null);
+                localStorage.setItem("role", "");
+
                 showLoginContent(true);
                 return;
             }
