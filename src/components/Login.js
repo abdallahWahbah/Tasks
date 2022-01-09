@@ -8,10 +8,12 @@ import CardContent from '@mui/material/CardContent';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { LoginJson } from '../Inputs/FormInputCreator';
+import { LoginJson } from '../Inputs/Schema';
 import TextForm from '../Inputs/TextForm';
 import ButtonForm from '../Inputs/ButtonForm';
 
+import InitialValuesValidators from './InitialValuesValidators';
+import FormInputCreator from '../Inputs/FormInputCreator';
 
 const LoginPage = (props) => {
 
@@ -62,21 +64,8 @@ const LoginPage = (props) => {
         login();
     }
 
-    let initialValues = {};
-    let validators = {};
-
-    LoginJson.map(element =>
-    {   
-        if(element.hasOwnProperty("initialValue")) 
-        {
-            initialValues[element.name] = element["initialValue"];
-        }
-        if(element.hasOwnProperty("validator")) 
-        {
-            validators[element.name] = element["validator"];
-        }
-        console.log(initialValues, validators)
-    });
+    const {initialValues} = InitialValuesValidators("initialValues", LoginJson);
+    const {validators} = InitialValuesValidators("validators", LoginJson);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -84,23 +73,7 @@ const LoginPage = (props) => {
         validationSchema: yup.object(validators)
     });
 
-    const formContent = LoginJson.map(element =>
-    {
-        if(element.type === "email")
-        {
-            return <TextForm formik={formik} json={element} key={element.name}/>
-        }
-        else if(element.type === "password")
-        {
-            return <TextForm formik={formik} json={element} key={element.name}/>
-        }
-        else if(element.type === "button")
-        {
-            return <ButtonForm json={element} key={element.type}/>
-        }
-        else return null;
-    })
-
+    const formContent = <FormInputCreator jsonObject={LoginJson} formik={formik}/>;
 
     const loginContent = (
         <Card sx={{ maxWidth: 350, marginTop: "100px !important", textAlign: "center", margin: "auto", border: 1}}>

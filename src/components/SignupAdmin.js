@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { AdminJson } from '../Inputs/FormInputCreator';
+import { AdminJson } from '../Inputs/Schema';
 
-import TextForm from '../Inputs/TextForm';
-import CheckboxForm from '../Inputs/CheckboxForm';
-import ButtonForm from '../Inputs/ButtonForm';
+
+import InitialValuesValidators from './InitialValuesValidators';
+import FormInputCreator from '../Inputs/FormInputCreator';
 
 const SignupAdmin = (props) => 
 {
@@ -44,20 +44,8 @@ const SignupAdmin = (props) =>
     postCustomer();
   }
 
-  let initialValues = {};
-  let validators = {};
-  AdminJson.map(element =>
-  {   
-    if(element.hasOwnProperty("initialValue")) 
-    {
-        initialValues[element.name] = element["initialValue"];
-    }
-    if(element.hasOwnProperty("validator")) 
-    {
-        validators[element.name] = element["validator"];
-    }
-    console.log(initialValues, validators)
-  });
+  const {initialValues} = InitialValuesValidators("initialValues", AdminJson)
+  const {validators} = InitialValuesValidators("validators", AdminJson)
 
   const formik = useFormik({
     initialValues,
@@ -65,38 +53,40 @@ const SignupAdmin = (props) =>
     validationSchema: yup.object(validators)
   });
 
-  const formContent = AdminJson.map(element =>
-  {
-      if(element.type === "text")
-      {
-        return <TextForm formik={formik} json={element} key={element.name}/>
-      }
-      else if(element.type === "email")
-      {
-        return <TextForm formik={formik} json={element} key={element.name}/>
-      }
-      else if(element.type === "password")
-      {
-        return <TextForm formik={formik} json={element} key={element.name}/>
-      }
-      else if(element.type === "number")
-      {
-        return <TextForm formik={formik} json={element} key={element.name}/>
-      }
-      else if(element.type === "checkbox")
-      {
-        return <CheckboxForm formik={formik} json={element} key={element.name}/>
-      }
-      else if(element.type === "button")
-      {
-        return (
-          <div style={{textAlign: "center"}} key={element.type}>
-            <ButtonForm json={element}/>
-          </div>
-        )
-      }
-      else return null;
-  })
+  // const formContent = AdminJson.map(element =>
+  // {
+  //     if(element.name === "name")
+  //     {
+  //       return <TextForm formik={formik} json={element} key={element.name}/>
+  //     }
+  //     else if(element.name === "email")
+  //     {
+  //       return <TextForm formik={formik} json={element} key={element.name}/>
+  //     }
+  //     else if(element.name === "password")
+  //     {
+  //       return <TextForm formik={formik} json={element} key={element.name}/>
+  //     }
+  //     else if(element.name === "phone")
+  //     {
+  //       return <TextForm formik={formik} json={element} key={element.name}/>
+  //     }
+  //     else if(element.name === "conditions")
+  //     {
+  //       return <CheckboxForm formik={formik} json={element} key={element.name}/>
+  //     }
+  //     else if(element.name === "button")
+  //     {
+  //       return (
+  //         <div style={{textAlign: "center"}} key={element.name}>
+  //           <ButtonForm json={element}/>
+  //         </div>
+  //       )
+  //     }
+  //     else return null;
+  // })
+
+  const formContent = <FormInputCreator jsonObject={AdminJson} formik={formik}/>;
 
   return (
     <Box sx={{ width: '70%', margin: "20px auto"}}>

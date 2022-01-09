@@ -1,354 +1,138 @@
-import * as yup from 'yup';
+import React from 'react';
 
-export const LoginJson = 
-[
-    {
-        type: "email",
-        fullWidth: "fullWidth",
-        label: "Email",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "email",
-        initialValue: "",
-        validator: yup.string().email("email must be valid").required("Email can't be empty")
-    },
-    {
-        type: "password",
-        fullWidth: "fullWidth",
-        label: "Password",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "password",
-        initialValue: "",
-        validator: yup.string().trim().min(5).max(60).required("Password can't be empty")
-    },
-    {
-        type: "button",
-        fullWidth: "fullWidth",
-        sx: {margin: "10px 0"},
-        title: "Login"
-    }
-]
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
+import FormLabel from '@mui/material/FormLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
 
-export const CustomerJson = 
-[
-    {
-        type: "text", // name
-        fullWidth: "fullWidth",
-        label: "Full Name",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "name",
-        initialValue: "",
-        validator: yup.string().min(7).required("Name can't be empty")
-    },
-    {
-        type: "text", // email
-        fullWidth: "fullWidth",
-        label: "Email",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "email",
-        initialValue: "",
-        validator: yup.string().email("email must be valid").required("Email can't be empty")
-    },
-    {
-        type: "password",
-        fullWidth: "fullWidth",
-        label: "Password",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "password",
-        initialValue: "",
-        validator: yup.string().trim().min(5).max(60).required("Password can't be empty")
-    },
-    {
-        type: "number",
-        fullWidth: "fullWidth",
-        label: "Phone Number",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "phone",
-        initialValue: "",
-        validator: yup.number().positive().required("Phone Number can't be empty")
-    },
-    {
-        type: "select", // education
-        labelId: "demo-simple-select-label",
-        sx: {marginBottom: "20px"},
-        selectId: "demo-simple-select",
-        label: "Education",
-        name: "edu",
-        initialValue: "",
-        validator: yup.string().required("Choose your education"),
-        options: 
-        [
-            {
-                value: "BSC",
-                title: "BSC"
-            },
-            {
-                value: "Master",
-                title: "Master"
-            },
-            {
-                value: "PHD",
-                title: "PHD"
-            },
-        ]
-    },
-    {
-        type: "radio", // gender
-        label: "Gander",
-        ariaLabel: "gender",
-        defaultValue: "female",
-        name: "radio-buttons-group",
-        options:
-        [
-            {
-                value: "female",
-                label: "Female"
-            },
-            {
-                value: "male",
-                label: "Male"
-            }
-        ]
-    },
-    {
-        type: "text", // address
-        fullWidth: "fullWidth",
-        label: "Address",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "address",
-        initialValue: "",
-        validator: yup.string().min(7).required("Address can't be empty")
-    },
-    {
-        type: "checkbox",
-        sx: {marginBottom:"20px"},
-        name: "conditions",
-        initialValue: "",
-        validator: yup.boolean().required("You have to accept the terms and conditions first"),
-        label: "Agree to terms and conditions"
-    },
-    {
-        type: "button",
-        fullWidth: "fullWidth",
-        sx: {width: "70%", textAlign: "center !important"},
-        title: "Register"
-    }
-]
+const FormInputCreator = (props) => {
 
-export const AdminJson = 
-[
+    const formContent = props.jsonObject.map(element =>
     {
-        type: "text", // name
-        fullWidth: "fullWidth",
-        label: "Full Name",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "name",
-        initialValue: "",
-        validator: yup.string().min(7).required("Name can't be empty")
-    },
-    {
-        type: "email",
-        fullWidth: "fullWidth",
-        label: "Email",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "email",
-        initialValue: "",
-        validator: yup.string().email("email must be valid").required("Email can't be empty")
-    },
-    {
-        type: "password",
-        fullWidth: "fullWidth",
-        label: "Password",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "password",
-        initialValue: "",
-        validator: yup.string().trim().min(5).max(60).required("Password can't be empty")
-    },
-    {
-        type: "number",
-        fullWidth: "fullWidth",
-        label: "Phone Number",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "phone",
-        initialValue: "",
-        validator: yup.number().positive().required("Phone Number can't be empty")
-    },
-    {
-        type: "checkbox",
-        sx: {marginBottom:"20px"},
-        name: "conditions",
-        initialValue: "",
-        validator: yup.boolean().required("You have to accept the terms and conditions first"),
-        label: "Agree to terms and conditions"
-    },
-    {
-        type: "button",
-        fullWidth: "fullWidth",
-        sx: {width: "70%", textAlign: "center !important"},
-        title: "Register"
-    }
-]
+        if( element.name === "name" ||
+            element.name === "email" || 
+            element.name === "password" || 
+            element.name === "phone" ||
+            element.name === "address" ||
+            element.name === "description" ||
+            element.name === "subject")
+            
+        {
+            return (
+                <React.Fragment key={element.name}>
+                    <TextField 
+                        fullWidth={element.fullWidth ? true : false}
+                        label={element.label}
+                        id={element.id}
+                        multiline={element.multiline ? true : false}
+                        rows={element.rows ? element.rows : 1}
+                        type={element.type ? element.type : "text"} 
+                        sx={element.sx ? element.sx : null}
+                        {...props.formik.getFieldProps(element.name)}/>
 
-export const CreateComplaintJson = 
-[
-    {
-        type: "select1", // complaint type
-        labelId: "demo-simple-select-label",
-        sx: {marginBottom: "20px"},
-        selectId: "demo-simple-select",
-        label: "Complaint Type",
-        name: "type",
-        initialValue: "",
-        validator: yup.string().required("Type is required"),
-        options:
-        [
-            {
-                value: "type1",
-                title: "Type 1"
-            },
-            {
-                value: "type2",
-                title: "Type 2"
-            },
-            {
-                value: "type3",
-                title: "Type 3"
-            },
-        ]
-    },
-    {
-        type: "text", // complaint subject
-        fullWidth: "fullWidth",
-        label: "Subject",
-        id: "fullWidth",
-        sx: {marginBottom: "20px"},
-        name: "subject",
-        initialValue: "",
-        validator: yup.string().required("Subject is required")
-    },
-    {
-        type: "select", // complaint severity
-        labelId: "demo-simple-select-label",
-        sx: {marginBottom: "20px"},
-        selectId: "demo-simple-select",
-        label: "Severity",
-        name: "severity",
-        initialValue: "",
-        validator: yup.string().required("Severity is required"),
-        options: 
-        [
-            {
-                value: "severity1",
-                title: "Severity 1"
-            },
-            {
-                value: "severity2",
-                title: "Severity 2"
-            },
-            {
-                value: "severity3",
-                title: "Severity 3"
-            },
-        ]
-    },
-    {
-        type: "text", // complaint description
-        fullWidth: "fullWidth",
-        label: "Description",
-        id: "fullWidth",
-        multiline: true,
-        rows: 3,
-        sx: {marginBottom: "20px"},
-        name: "description",
-        initialValue: "",
-        validator: yup.string().required("Description is required"),
-    },
-    {
-        type: "radio", // language
-        label: "Prefered Contact Language",
-        ariaLabel: "Prefered Contact Language",
-        name: "radio-buttons-group",
-        options:
-        [
-            {
-                value: "arabic",
-                label: "Arabic"
-            },
-            {
-                value: "english",
-                label: "English"
-            }
-        ]
-    },
-    {
-        type: "checkbox",
-        sx: {marginBottom:"20px"},
-        name: "conditions",
-        initialValue: "",
-        validator: yup.boolean().required("You have to accept the terms and conditions first"),
-        label: "Agree to terms and conditions"
-    },
-    {
-        type: "button",
-        fullWidth: "fullWidth",
-        sx: {width: "70%", textAlign: "center !important"},
-        title: "Create Complaint"
-    }
-]
+                        {props.formik.touched[element.name] && props.formik.errors[element.name] ? <div style={{color:"red", marginBottom: "20px", textAlign: "left"}}>{props.formik.errors[element.name]}</div> : null}
+                </React.Fragment>
+            )
+        }
+        if(element.name === "button")
+        {
+            return (
+                <Button 
+                    key={element.name}
+                    type="submit" 
+                    variant="contained" 
+                    fullWidth={element.fullWidth ? true : false}
+                    sx={element.sx}>{element.title}</Button>
+            )
+        }
+        if(element.name === "buttonWide")
+        {
+            return (
+                <div style={{textAlign: "center"}} key={element.name}>
+                    <Button 
+                        key={element.name}
+                        type="submit" 
+                        variant="contained" 
+                        fullWidth={element.fullWidth ? true : false}
+                        sx={element.sx}>{element.title}</Button>
+                </div>
+            )
+        }
+        if( element.name === "edu" || 
+            element.name === "type" || 
+            element.name === "severity")
+        {
+            return (
+                <React.Fragment>
+                    <FormControl fullWidth sx={{marginBottom: "20px"}}>
+                        <InputLabel id={element.labelId}>{element.label}</InputLabel>
+                        <Select sx={element.sx}
+                            labelId={element.labelId}
+                            id={element.selectId}
+                            label={element.label}
+                            {...props.formik.getFieldProps(element.name)}
+                            >
+                                {element.options.map(option =>
+                                (
+                                <MenuItem value={option.value}>{option.title}</MenuItem> 
+                                ))}
+                            </Select>
+                        {props.formik.touched[element.name] && props.formik.errors[element.name]? <div style={{color:"red", marginBottom: "20px"}}>{props.formik.errors[element.name]}</div> : null}
+                    </FormControl>
+                </React.Fragment>
+            )
+        }
+        if(element.name === "radio-buttons-group")
+        {
+            return (
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">{element.label}</FormLabel>
+                    <RadioGroup
+                    aria-label={element.ariaLabel}
+                    defaultValue={element.defaultValue ? element.defaultValue : null}
+                    {...props.formik.getFieldProps(element.name)}
+                    >
+                        {element.options.map(option =>
+                        (
+                            <FormControlLabel value={option.value} control={<Radio />} label={option.label} />
+                        ))}
+                    </RadioGroup>
+                    {props.formik.touched[element.name] && props.formik.errors[element.name]? <div style={{color:"red", marginBottom: "20px"}}>{props.formik.errors[element.name]}</div> : null}
+                
+                </FormControl>
+            )
+        }
+        if(element.name === "conditions")
+        {
+            return(
+                <FormGroup sx={element.sx}>
+                    <FormControlLabel 
+                        control={<Checkbox {...props.formik.getFieldProps(element.name)} />} 
+                        label={element.label} 
+                        />
+                            {props.formik.touched[element.name] && props.formik.errors[element.name]? <div style={{color:"red", marginBottom: "20px"}}>{props.formik.errors[element.name]}</div> : null}
+                </FormGroup>
+            )
+        }
+        else return null;
+    });
 
-export const UpdateComplaintJson = 
-[
-    {
-        type: "select", // complaint type
-        labelId: "demo-simple-select-label",
-        sx: {marginBottom: "20px"},
-        selectId: "demo-simple-select",
-        label: "Complaint Type",
-        name: "type",
-        initialValue: "",
-        validator: yup.string().required("Type is required"),
-        options: 
-        [
-            {
-                value: "type1",
-                title: "Type 1"
-            },
-            {
-                value: "type2",
-                title: "Type 2"
-            },
-            {
-                value: "type3",
-                title: "Type 3"
-            },
-        ]
-    },
-    {
-        type: "text", // complaint description
-        fullWidth: "fullWidth",
-        label: "Description",
-        id: "fullWidth",
-        multiline: true,
-        rows: 3,
-        sx: {marginBottom: "20px"},
-        name: "description",
-        initialValue: "",
-        validator: yup.string().required("Description is required")
-    },
-    {
-        type: "button",
-        fullWidth: "fullWidth",
-        sx: {width: "70%", textAlign: "center !important"},
-        title: "Update Complaint"
-    }
-]
+
+
+
+    return (
+        <React.Fragment>
+            {formContent}
+        </React.Fragment>
+    )
+}
+
+export default FormInputCreator;

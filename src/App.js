@@ -19,7 +19,7 @@ const App = ()=>
     const [userID, setUserID] = useState(localStorage.getItem("id"));
     // console.log("type", userType);
     // console.log("showLogin", showLogin);
-    console.log('signed', signed, typeof signed);
+    // console.log('signed', signed, typeof signed);
     
     return(
         <div>
