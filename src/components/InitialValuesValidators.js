@@ -20,7 +20,6 @@ const InitialValuesValidators = (type, jsonObject) =>
             }
         }
     });
-    
     return {initialValues, validators};
 }
 
