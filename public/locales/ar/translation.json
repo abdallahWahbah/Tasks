@@ -1,0 +1,23 @@
+{
+    "ID Number": "رقم البطاقة",
+    "Center Owner Name":"اسم مالك المركز",
+    "Date Of Birth":"تاريخ الميلاد",
+    "Phone Number":"رقم الموبايل",
+    "License Type":"نوع الرخصة",
+    "Commercial Registeration Number":"رقم السجل التجاري",
+    "Enityty Name":"اسم الكيان",
+    "Commissioner Phone Number":"رقم جوال المفوض",
+    "Building Number":"رقم المبني",
+    "Street Name":"اسم الشارع",
+    "District Number":"رقم الحي",
+    "City":"المدينة",
+    "Postal Code":"الرقم البريدي",
+    "Extra Number":"رقم اضافي",
+    "Center name":"اسم المركز",
+    "Age Group":"الفئة العمرية للمستقدمين",
+    "Applicants Gender":"جنس المستقدمين",
+    "Male":"ذكر",
+    "Female":"أنثي",
+    "Both":"كلاهما",
+    "Home page welcome message":"رسالة ترحيب الصفحة الاساسية"
+}

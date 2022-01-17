@@ -27,21 +27,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { useTranslation } from 'react-i18next';
+
 const FormInputCreator = (props) => {
 
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-    }
-      
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-    ];
-    const [selectedValue, setSelectedValue] = React.useState('a');
-
+    const { t } = useTranslation();
 
     const formContent = props.jsonObject.map(element =>
     {
@@ -173,7 +163,7 @@ const FormInputCreator = (props) => {
                             fullWidth
                             name={element.name}
                             type={element.type ? element.type : "text"}
-                            label={element.label}
+                            label={t(element.label)}
                             value={props.values && props.values[element.name]}
                             // error={props.errors && props.errors[element?.name]}
                             // helperText={props.errors && <div style={{fontSize: "14px"}}>{props.errors[element.name]}</div> }
@@ -194,7 +184,7 @@ const FormInputCreator = (props) => {
                             dateAdapter={AdapterDateFns}
                         >
                             <DesktopDatePicker
-                                label={element.label}
+                                label={t(element.label)}
                                 name={element.name}
                                 inputFormat="MM/dd/yyyy"
                                 value={props.values[element.name]}
@@ -219,12 +209,12 @@ const FormInputCreator = (props) => {
                 <React.Fragment  key={element.name}>
                     <Grid item xs={6} md={6} sm={6} lg={6}>
                         <FormControl fullWidth sx={element.sx}>
-                            <InputLabel id={element.labelId}>{element.label}</InputLabel>
+                            <InputLabel id={element.labelId}>{t(element.label)}</InputLabel>
                             <Select 
                                 labelId={element.labelId}
                                 id={element.selectId}
                                 name={element.name}
-                                label={element.label}
+                                label={t(element.label)}
                                 value={props.values[element.name]}
                                 onChange={props.handleChange}
                                 >
@@ -244,17 +234,17 @@ const FormInputCreator = (props) => {
             return (
                 <Grid item xs={12} md={12} sm={12} lg={12}  key={element.name}>
                     <FormControl component="fieldset">
-                        <FormLabel component="legend">{element.label}</FormLabel>
+                        <FormLabel component="legend">{t(element.label)}</FormLabel>
                         <RadioGroup 
                                 row 
-                                aria-label={element.ariaLabel} 
+                                aria-label={t(element.ariaLabel)} 
                                 name={element.name}
                                 value={props.values[element.name]}
                                 onChange={props.handleChange}
                             >
                                 {element.options.map(option =>
                                 (
-                                    <FormControlLabel key={option.value} value={option.value} control={<Radio />} label={option.label} />
+                                    <FormControlLabel key={option.value} value={option.value} control={<Radio />} label={t(option.label)} />
                                 ))}
                         </RadioGroup>
                         {props.errors[element.name] ? <div style={{color:"red", marginTop: "20px"}}>{props.errors[element.name]}</div> : null}

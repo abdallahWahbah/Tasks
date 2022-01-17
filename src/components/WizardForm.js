@@ -67,7 +67,7 @@ const WizardForm = (props) => {
       })
       if(data.request.status === 200)
       {
-        props.showTable(true);
+        // props.showTable(true);
         props.tableData(data.data);
         console.log(data.data)
       }
@@ -85,19 +85,19 @@ const WizardForm = (props) => {
         steps={[
           {
             component: AdditionalFormInputCreator1,
-            validationSchema: validator1,
+            // validationSchema: validator1,
           },
           {
             component: AdditionalFormInputCreator2,
-            validationSchema: validator2,
+            // validationSchema: validator2,
           },
           {
             component: AdditionalFormInputCreator3,
-            validationSchema: validator3
+            // validationSchema: validator3
           },
           {
             component: AdditionalFormInputCreator4,
-            validationSchema: null
+            // validationSchema: null
           },
         ]}
       >

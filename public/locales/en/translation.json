@@ -1,0 +1,23 @@
+{
+    "ID Number" : "ID Number",
+    "Center Owner Name": "Center Owner Name",
+    "Date Of Birth":"Date Of Birth",
+    "Phone Number":"Phone Number",
+    "License Type":"License Type",
+    "Commercial Registeration Number":"Commercial Registeration Number",
+    "Enityty Name":"Enityty Name",
+    "Commissioner Phone Number":"Commissioner Phone Number",
+    "Building Number":"Building Number",
+    "Street Name":"Street Name",
+    "District Number":"District Number",
+    "City":"City",
+    "Postal Code":"Postal Code",
+    "Extra Number":"Extra Number",
+    "Center name":"Center name",
+    "Age Group":"Age Group",
+    "Applicants Gender":"Applicants Gender",
+    "Male":"Male",
+    "Female":"Female",
+    "Both":"Both",
+    "Home page welcome message":"Home page welcome message"
+}

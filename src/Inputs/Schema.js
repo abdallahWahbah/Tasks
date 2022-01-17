@@ -368,10 +368,7 @@ export const Page1 =
         sx: {marginBottom: "20px"},
         name: "id-number",
         initialValue: "",
-        // validator: yup.string().length(2, "ID Number must be 2 numbers").required("ID Number can't be empty"),
-        // can't mix between length(string) and positive(number)
-        // use max and min
-        validator: yup.number().min(1, "ID Number must be 1 number").max(1, "ID Number must be 1 number")
+        validator: yup.number().min(1, "ID Number must be 1 number").max(1000, "ID Number can't be more than 1000").required("ID Number can't be empty")
     },
     {
         type: "text",
